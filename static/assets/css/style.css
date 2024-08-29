@@ -1,0 +1,42 @@
+#intro--logo{
+    width: 500px;
+}
+
+.slider--item-center{
+    height: 510px !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    display: block;
+}
+
+#color {
+    color: #BBB;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 1.2em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+#c{
+    position: fixed;
+    top: 0;
+    left: 0;
+    filter: blur(1px);
+    z-index: -1;
+}
+
+.contact{
+    background-image: none !important;
+}
+
+.contact--lockup .modal{
+    background-color: #121212 !important;
+}

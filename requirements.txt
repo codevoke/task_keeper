@@ -1,0 +1,9 @@
+flask
+flask-jwt-extended
+flask-restful
+passlib
+
+flask-sqlalchemy
+psycopg2-binary
+
+aiosmtplib

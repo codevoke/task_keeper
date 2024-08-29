@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Development</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="HTML5 website template">
+  <meta name="keywords" content="global, template, html, sass, jquery">
+  <meta name="author" content="Bucky Maler">
+  <link rel="shortcut icon" href="/static/assets/img/mainLogo.png" type="image/png">
+  <link rel="stylesheet" href="/static/assets/css/main.css">
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <style>
+    #modal{
+      width: 100%; 
+      height: 100%; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      backdrop-filter: blur(5px); 
+      z-index: 50; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+    }
+    #modal > div{
+      width: max(40%, 500px);
+      background-color: rgb(23, 23, 23);
+      padding: 10px 100px 50px 100px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      position: relative;
+    }
+    #modal .close_btn{
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      color: white;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.5s;
+    }
+    #modal .close_btn:hover{
+      opacity: 1;
+    }
+    @media (max-width: 500px) {
+      #modal > div {
+        width: 100%;
+        top: 0;
+        padding: 10px 30px 50px 30px;
+      }
+    }
+    #modal > div > div{
+      margin-top: 7px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #modal > div > div > button{
+      margin-top: 11px;
+      background-color: #2d4cff;
+      border: none;
+      box-shadow: 1px 0px 20px 5px black;
+      cursor: pointer;
+    }
+    .form__href{
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    #modal > div h1{
+      margin-bottom: 0;
+    }
+    input{
+      color: black;
+      line-height: 1.6;
+    }
+    input{
+      border: 1px solid white;
+      border-radius: 5px;
+      padding: 1px 3px;
+    }
+    #modal > div > * {
+      user-select: none;
+    }
+    input[data-error="true"]{
+      border-color: red;
+    }
+    input[data-error="false"]{
+      border-color: rgb(2, 222, 2);
+    }
+    select{
+      color: black;
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+    .place_order__btn__form{
+      margin-top: 5px;
+      background: linear-gradient(#2d4cff 0%, #612dff 100%);
+      border: none;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+    textarea{
+      padding: 2px 5px;
+      color: black;
+      border-radius: 5px;
+      resize: none;
+    }
+    button:disabled{
+      color: rgba(128, 128, 128, 0.757);
+    }
+    .slider--item a{
+      cursor: pointer;
+    }
+    #place_order{
+      display: flex; flex-direction: column; gap: 10px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<!-- notification for small viewports and landscape oriented smartphones -->
+<div class="device-notification">
+  <a class="device-notification--logo" href="#0">
+    <img src="/static/assets/img/logo.png" alt="Global">
+    <p>Development</p>
+  </a>
+  <p class="device-notification--message">Speed, Reliability, Success!</p>
+</div>
+
+<div class="perspective effect-rotate-left">
+  <div class="container"><div class="outer-nav--return"></div>
+    <div id="viewport" class="l-viewport">
+      <div class="l-wrapper">
+        <header class="header">
+          <a class="header--logo" href="#0">
+            <img src="/static/assets/img/logo.png" alt="Global">
+            <p>Development</p>
+          </a>
+          <div class="header--nav-toggle">
+            <span></span>
+          </div>
+        </header>
+        <nav class="l-side-nav">
+          <ul class="side-nav">
+            <li class="is-active"><span>Home</span></li>
+            <li><span>Top services</span></li>
+            <li><span>Terms and Conditions</span></li>
+            <!-- <li><span>Обратная связь</span></li> -->
+            <li><span>Place an order</span></li>
+          </ul>
+        </nav>
+        <ul class="l-main-content main-content">
+          <li class="l-section section section--is-active">
+            <div class="intro">
+              <div class="intro--banner">
+                <h1>Digital<br>Frontier<br>Canada</h1>
+                <button class="cta">Place an order
+                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
+                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
+                    <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
+                  </g>
+                  </svg>
+                  <span class="btn-background"></span>
+                </button>
+                <img src="/static/assets/img/mainLogo.png" alt="Welcome" id="intro--logo">
+              </div>
+              <div class="intro--options">
+                <a href="/about/">
+                  <h3>All rights reserved</h3>
+                  <p>All rights reserved, we use cookies for more convenient use</p>
+                </a>
+                <a href="/ab_o/">
+                  <h3>About our reliability</h3>
+                  <p>We employ only trusted professionals</p>
+                </a>
+                <a href="/ab_n/">
+                  <h3>Why us?</h3>
+                  <p>We are a team of professionals with more than 6 years of experience</p>
+                </a>
+              </div>
+            </div>
+          </li>
+          <li class="l-section section">
+            <div class="work">
+              <h2>Services</h2>
+              <div class="work--lockup">
+                <ul class="slider">
+                  <li class="slider--item slider--item-left">
+                    <a>
+                      <div class="slider--item-image">
+                        <img src="/static/assets/img/content.png" alt="Content Creation">
+                      </div>
+                      <p class="slider--item-title">Content Creation</p>
+                      <p class="slider--item-description">
+                        Blogs, articles, press releases
+                        <br>
+                        Video content production, graphic design, infographics
+                        <br>
+                        Price from 500$ to 3000$
+                      </p>
+                    </a>
+                  </li>
+                  <li class="slider--item slider--item-center">
+                    <a>
+                      <div class="slider--item-image">
+                        <img src="/static/assets/img/2.png" alt="development mobile apps and websites">
+                      </div>
+                      <p class="slider--item-title">Mobile and Web development</p>
+                      <p class="slider--item-description">
+                        Mobile applications
+                        <br>
+                        Web applications and sites
+                        <br>Prices range from $50 to $150 per hour for development, with fixed prices ranging from $1,000 to $5,000 per project.
+                      </p>
+                    </a>
+                  </li>
+                  <li class="slider--item slider--item-right">
+                    <a>
+                      <div class="slider--item-image">
+                        <img src="/static/assets/img/seo.png" alt="Seo and Advertising">
+                      </div>
+                      <p class="slider--item-title">SEO</p>
+                      <p class="slider--item-description">
+                        SEO from $750 to $2500 per month
+                        <br>
+                        Advertising campaigns from $1000 to $4000 per month
+                        <br>
+                      </p>
+                    </a>
+                  </li>
+                  <li class="slider--item">
+                    <a>
+                      <div class="slider--item-image">
+                        <img src="/static/assets/img/ml.png" alt="Seo and Advertising">
+                      </div>
+                      <p class="slider--item-title">ML and AI</p>
+                      <p class="slider--item-description">
+                        Process Automation
+                        <br>
+                        Analytics and Big Data
+                        <br>
+                        <br>
+                        Price from 5000$ to 20000$
+                      </p>
+                    </a>
+                  </li>
+                  
+                  <li class="slider--item">
+                    <a>
+                      <div class="slider--item-image">
+                        <img src="/static/assets/img/blockchain.png" alt="Seo and Advertising">
+                      </div>
+                      <p class="slider--item-title">Blockchain Solutions</p>
+                      <p class="slider--item-description">
+                        Developing Decentralized Applications and Blockchain Infrastructure.
+                        <br>
+                        Price from 10000$ to 50000$ per project
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+                <div class="slider--prev">
+                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
+                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
+                    <path d="M561,1169C525,1155,10,640,3,612c-3-13,1-36,8-52c8-15,134-145,281-289C527,41,562,10,590,10c22,0,41,9,61,29
+                    c55,55,49,64-163,278L296,510h575c564,0,576,0,597,20c46,43,37,109-18,137c-19,10-159,13-590,13l-565,1l182,180
+                    c101,99,187,188,193,199c16,30,12,57-12,84C631,1174,595,1183,561,1169z"/>
+                  </g>
+                  </svg>
+                </div>
+                <div class="slider--next">
+                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
+                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
+                    <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
+                  </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="l-section section">
+            <div class="about">
+              <div class="about--banner">
+                <h1>Partnership and Liability Terms</h1>
+                <br>
+                <h3>Separation of Roles</h3>
+                <h4 style="font-weight: 300 !important;">
+                  Clear definition of who is responsible for development,
+                  <br> 
+                  marketing, project management, and finance.
+                </h4>
+                <h3>Financial Model</h3>
+                <h4 style="font-weight: 300 !important;">
+                  Profits are divided based on each partner's contribution and pre-determined criteria.
+                </h4>
+                  <span>
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
+
+                    </svg>
+                  </span>
+                </a>
+                <!-- <img src="/static/assets/img/3page.jpg" alt="About Us"> -->
+              </div>
+<!--              <div class="about&#45;&#45;options">-->
+<!--                <a href="#0">-->
+<!--                  <h3>Вариант1</h3>-->
+<!--                </a>-->
+<!--                <a href="#0">-->
+<!--                  <h3>Вариант2</h3>-->
+<!--                </a>-->
+<!--                <a href="#0">-->
+<!--                  <h3>Вариант3</h3>-->
+<!--                </a>-->
+<!--              </div>-->
+            </div>
+          </li>
+          <li class="l-section section">
+            <div class="contact">
+              <div class="contact--lockup">
+                <div class="modal">
+                  <div class="modal--information">
+                    <h2>Contacts</h2>
+                    <a href="" style="font-weight: 300 !important; text-decoration: underline; margin-bottom: 0px; ">itralitcompany@gmail.com</a>
+                    <a href="tel:+79011827420" style="font-weight: 300 !important; text-decoration: underline; margin-top: 5px;">Contact by phone</a>
+                  </div>
+                  <br>
+                  <ul class="modal--options">
+                    <li><a
+                      id="place_order__btn"
+                      style="background: rgb(14,78,242);
+                      background: linear-gradient(0deg, rgba(14,78,242,1) 0%, rgba(7,210,179,1) 100%);
+                      "
+                      >Place an order</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="l-section section">
+            <div class="hire">
+              <h1>Курс IT специалист с нуля</h1>
+              <ol> 
+                <li style="font-size: 19px;">Python+Английский для IT специалистов+Django и основы вёрстки</li>
+                <li style="font-size: 19px;">Курс длится 60 занятий по 1,5 часа</li>
+                <li style="font-size: 19px;">3 занятия в неделю 70% практики</li>
+                <li style="font-size: 19px;">Продолжительность курса 5 месяцев в группе из пяти человек</li>
+                <li style="font-size: 19px;">Месяц занятий стоит всего 7.999</li>
+                <button href="https://t.me/Itralit" style="background-color: blue;" font="bold">Записаться на курс</button>
+              </ol>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <ul class="outer-nav">
+    <li class="is-active">Home</li>
+    <li>Top services</li>
+    <li>Terms and Conditions</li>
+    <!-- <li>Обратная связь</li> -->
+    <li id="nav__order">Place an order</li>
+  </ul>
+</div>
+
+<section id="modal" data-active="true" style="display: none;">
+  <div id="register_form" style="display: none;">
+      <span class="close_btn">
+        X
+      </span>
+      <h1>Register</h1>
+      <h5>or <a class="form__href">login</a></h5>
+      <div>
+        <input type="text" placeholder="name" required
+        class="name__inp username"
+        custom>
+        <input type="email" placeholder="login" required
+        custom class="login">
+        <input type="password" required placeholder="password" class="pass">
+        <button id="reg__btn">Register</button>
+      </div>
+  </div>
+  
+  <div id="login_form" style="display: none;">
+    <span class="close_btn">
+      X
+    </span>
+    <h1>Login</h1>
+    <h5>or <a class="form__href">register</a></h5>
+    <div>
+      <input type="email" placeholder="login" required
+      class="email"
+      custom>
+      <input type="password" required placeholder="password" class="pass">
+      <button id="login__btn">Login</button>
+    </div>
+</div>
+  <div id="confirm_email" style="display: none;">
+    <span class="close_btn">
+      X
+    </span>
+    <h2 style="margin-top: 20px;">Check your email to continue</h2>
+  </div>
+  <div id="place_order"
+  style="display: none;"
+  >
+    <span class="close_btn">
+      X
+    </span>
+    <h2 style="text-align: center;">Order details</h2>
+    <select name="order__select" id="order__select" required>
+      <option value="SEO">SEO</option>
+      <option value="ML and AI">ML and AI</option>
+      <option value="Mobile and Web development">Mobile and Web development</option>
+      <option value="Content Creation">Content Creation</option>
+      <option value="Blockchain Solutions">Blockchain Solutions</option>
+    </select>
+    <input type="text" required placeholder="Title" id="order__title">
+    <textarea name="desc" id="desc__area" rows="5" placeholder="Description..."
+    required
+    ></textarea>
+    <textarea name="contacts" id="contacts" rows="3" placeholder="Whatsapp - 123456789..."
+    required
+    ></textarea>
+    <button class="place_order__btn__form" id="pan">Place an order</button>
+  </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
+<script src="/static/assets/js/functions-min.js"></script>
+<script src="/static/assets/js/bg.js"></script>
+<script src="/static/assets/js/form.js"></script>
+</body>
+</html>
