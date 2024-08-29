@@ -179,7 +179,7 @@ place_order__btn__form.addEventListener('click', ()=>{
     place_order__btn__form.disabled = true;
 
     const type_ = document.querySelector('#order__select').value;
-    const title = document.querySelector('#order__title').title;
+    const title = document.querySelector('#order__title').value;
     const contacts = document.querySelector('#contacts').value; 
     const desc = document.querySelector('#desc__area').value; 
 
