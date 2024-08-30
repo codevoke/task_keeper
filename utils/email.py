@@ -14,7 +14,7 @@ SMTP_PORT = 465
 SMTP_LOGIN = "durak2.online@yandex.ru"
 SMTP_PASSWORD = "nrddetakhuebpakk"
 
-URL = "https://humble-umbrella-v4p456w4667cjw-5000.app.github.dev"
+URL = "http://31.129.99.202:5002"
 
 
 def send_email_async(email: str, username: str, code: str):
