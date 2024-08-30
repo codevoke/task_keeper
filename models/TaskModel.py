@@ -42,6 +42,7 @@ class TaskModel(BaseModel):
     def set_status(self, status: task_status) -> None:
         try:
             self.status = TaskStatus(status)
+            self.save()
         except ValueError:
             raise ValueError('Invalid task status')
         
@@ -50,7 +51,8 @@ class TaskModel(BaseModel):
         tasks = cls.query.all()
         if tasks:
             for task in tasks:
-                task.set_status(TaskStatus.SEEN.value)
+                if task.status == TaskStatus.CREATED:
+                    task.set_status(TaskStatus.SEEN.value)
             return tasks
         else:
             return None

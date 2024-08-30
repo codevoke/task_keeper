@@ -29,6 +29,8 @@ class AdminTaskResource(Resource):
 
         try:
             task: TaskModel = TaskModel.get_by_id(id)
+            if not task:
+                return {"message": "task not found"}, HTTPStatus.NOT_FOUND
             task.set_status(status)
             return {"message": "task updated"}, HTTPStatus.OK
         except ValueError as e:

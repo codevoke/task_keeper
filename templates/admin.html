@@ -194,7 +194,7 @@ Aliquam vel porta risus. Morbi maximus non dolor eu ornare. Praesent blandit fer
                     const btns = document.createElement('section')
                     btns.classList.add('btns')
 
-                    if(ord.status === 'created'){
+                    if(ord.status === 'created' || ord.status == 'seen'){
                         const acc = document.createElement('button')
                         acc.textContent = 'Accpet';
                         acc.classList.add('accept')
@@ -228,7 +228,7 @@ Aliquam vel porta risus. Morbi maximus non dolor eu ornare. Praesent blandit fer
 
                     s.appendChild(desc)
 
-                    s.dataset.ord_id = data.id;
+                    s.dataset.ord_id = ord.id;
 
                     orders.appendChild(s)
                 }

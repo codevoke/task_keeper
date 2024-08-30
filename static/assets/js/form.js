@@ -227,6 +227,9 @@ document.querySelectorAll('.slider--item').forEach(it => {
         if(!localStorage.getItem('acc')) return;
 
         const code = window.location.href.split('#')[1];
+        
+        if(!code)
+            return;
 
         fetch('/api/confirm-email',
             {
