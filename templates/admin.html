@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="HTML5 website template">
+    <meta name="keywords" content="global, template, html, sass, jquery">
+    <meta name="author" content="Bucky Maler">
+    <link rel="shortcut icon" href="../static/assets/img/mainLogo.png" type="image/png">
+    <link rel="stylesheet" href="../static/assets/css/main.css">
+    <style>
+        body{
+            background-color: #0c0c0c;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        #login_frame{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #login_frame button{
+        margin-top: 11px;
+        background-color: #2d4cff;
+        border: none;
+        box-shadow: 1px 0px 20px 5px black;
+        cursor: pointer;
+    }
+    input{
+      border: 1px solid white;
+      border-radius: 5px;
+      padding: 1px 3px;
+    }
+    input[data-error="true"]{
+      border-color: red;
+    }
+    input[data-error="false"]{
+      border-color: rgb(2, 222, 2);
+    }
+    #orders {
+        width: 100%;
+        height: 100dvh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 10px 20px;
+    }
+    #orders > section {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid white;
+    }
+    .upper-info{
+        display: flex;
+        gap: 10px;
+    }
+    h2[data-status="created"]{
+        color: rgb(240, 255, 27);
+    }
+    h2[data-status="seen"]{
+        color: rgb(74, 0, 202);
+    }
+    h2[data-status="accepted"]{
+        color: rgb(28, 216, 11);
+    }
+    h2[data-status="rejected"]{
+        color: rgb(216, 11, 11);
+    }
+    .btns{
+        flex-grow: 1;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .btns > button{
+        padding: 2px 4px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+    }
+    .reject{
+        background: rgb(216, 11, 11);
+    }
+    .accept{
+        background-color: rgb(28, 216, 11);
+    }
+    </style>
+</head>
+<body>
+    <div id="login_frame" class="frame">
+        <h2>Admin panel</h2>
+        <input type="text" placeholder="password" id="pass">
+        <button id="log_btn">Login</button>
+    </div>
+    <div id="orders" class="frame" style="display: none;">
+        <!-- 
+        <section>
+            <div class="upper-info">
+                <h2>User</h2>
+                <h2>·</h2>
+                <h2 data-status="rejected">No</h2>
+                <section class="btns">
+                    <button class="accept">Accept</button>
+                    <button class="reject">Reject</button>
+                </section>
+            </div>
+            <div class="desc">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar sollicitudin enim, sit amet fermentum tellus ultrices in. Vivamus bibendum vulputate nisi, nec placerat tellus sodales quis. Nullam pellentesque feugiat massa, ut faucibus libero tristique eget. Donec finibus fringilla tristique. Nullam eleifend elementum libero non dapibus. Vestibulum ac velit turpis. Phasellus rhoncus odio nec nunc rutrum, non facilisis eros vulputate. Nullam nec urna elit. Maecenas porttitor ultrices finibus. Aenean et cursus nibh. Proin non porttitor odio.
+
+Aliquam vel porta risus. Morbi maximus non dolor eu ornare. Praesent blandit fermentum aliquet. Etiam eu vehicula turpis. Cras leo libero, malesuada eu enim sit amet, hendrerit vestibulum mi. Nullam id quam nisi. Curabitur at lacus at enim venenatis porta a in leo.
+                </p>
+                <br>
+                <h4>
+                    Telegram - 89199183507
+                </h4>
+            </div>
+        </section>
+        -->
+    </div>
+    <script>
+        const log_btn = document.querySelector('#log_btn');
+
+        const login_frame = document.getElementById('login_frame');
+        const orders = document.getElementById('orders');
+
+        log_btn.onclick = function(){
+            const pass = document.querySelector('#pass').value;
+
+            fetch('/api/admin/login',
+                {
+
+                method: 'POST',
+
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({password: pass})
+                }
+            )
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                localStorage.setItem('ad', data.access_token);
+                return data.access_token;
+            })
+            .then((token) => {
+                console.log(token)
+                return fetch('/api/admin/tasks',{
+                    method: 'GET',
+
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                login_frame.style.display = 'none';
+                orders.style.display = '';
+                console.log(data);
+                for(let ord of data){
+                    const s = document.createElement('section')
+
+                    const up_ind = document.createElement('div')
+                    up_ind.classList.add('upper-info');
+
+                    const name = document.createElement('h2')
+                    name.textContent = ord.title;
+
+                    const dot = document.createElement('h2')
+                    dot.textContent = '·'
+
+                    const status = document.createElement('h2')
+                    status.dataset.status = ord.status;
+                    status.textContent = ord.status;
+                    status.classList.add('status')
+
+                    up_ind.appendChild(name)
+                    up_ind.appendChild(dot)
+                    up_ind.appendChild(status)
+
+                    const btns = document.createElement('section')
+                    btns.classList.add('btns')
+
+                    if(ord.status === 'created'){
+                        const acc = document.createElement('button')
+                        acc.textContent = 'Accpet';
+                        acc.classList.add('accept')
+    
+                        const rej = document.createElement('button')
+                        rej.textContent = 'Reject'
+                        rej.classList.add('reject')
+    
+                        btns.appendChild(acc)
+                        btns.appendChild(rej)
+                    }
+
+
+                    up_ind.appendChild(btns)
+
+                    s.appendChild(up_ind)
+
+                    const desc = document.createElement('div')
+                    desc.classList.add('desc')
+
+                    const p = document.createElement('p');
+                    p.textContent = ord.description;
+
+                    desc.appendChild(p);
+                    desc.appendChild(document.createElement('br'))
+
+                    const cnt = document.createElement('h4')
+                    cnt.textContent = ord.contacts;
+
+                    desc.appendChild(cnt);
+
+                    s.appendChild(desc)
+
+                    s.dataset.ord_id = data.id;
+
+                    orders.appendChild(s)
+                }
+
+                for(let ord of orders.children){
+                    let id = ord.dataset.ord_id;
+                    ord.querySelector('.accept').onclick = function(){
+                        fetch('/api/admin/tasks',
+                            {
+                                method: 'PUT',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Authorization': `Bearer ${localStorage.getItem('ad')}`,
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(
+                                    {
+                                        status: 'accepted',
+                                        id: parseInt(id)
+                                    }
+                                )
+                            }
+                        )
+                        .then(res => res.json())
+                        .then(()=>{
+                            ord.querySelector('.status').dataset.status = 'rejected'
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        })
+                    }
+                    ord.querySelector('.reject').onclick = function(){
+                        fetch('/api/admin/tasks',
+                            {
+                                method: 'PUT',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Authorization': `Bearer ${localStorage.getItem('ad')}`,
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(
+                                    {
+                                        status: 'rejected',
+                                        id: parseInt(id)
+                                    }
+                                )
+                            }
+                        )
+                        .then(res => res.json())
+                        .then(()=>{
+                            ord.querySelector('.status').dataset.status = 'accepted'
+                            ord.style.display = 'none';
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        })
+                    }
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                document.querySelector('#pass').dataset.error="true";
+            })
+        }
+    </script>
+</body>
+</html>
