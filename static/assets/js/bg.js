@@ -75,7 +75,9 @@ var root = {
   }
   
   window.onresize=()=>{
-      location.reload();
+      //location.reload();
+      c.height = window.innerHeight;
+      c.width = window.innerWidth;
   }
   
   setInterval(draw, root.matrixspeed);

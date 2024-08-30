@@ -62,6 +62,7 @@ const reg_form = document.querySelector('#register_form');
 const login_form = document.querySelector('#login_form');
 const conf_email = document.querySelector('#confirm_email');
 const place_order = document.querySelector('#place_order');
+const order_complete = document.querySelector('#order_complete');
 
 reg_form.querySelector('.form__href').onclick = function(){
     reg_form.style.display = "none";
@@ -205,6 +206,8 @@ place_order__btn__form.addEventListener('click', ()=>{
     .then(res => res.json())
     .then(()=>{
         console.log('nice')
+        place_order.style.display = 'none';
+        order_complete.style.display = '';
     })
     .catch(err => {
         console.error(err);
