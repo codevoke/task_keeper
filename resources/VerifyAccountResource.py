@@ -22,7 +22,10 @@ class VerifyAccountResource(Resource):
 
         try:
             user_id: int = int(get_jwt_identity())
+            print(f"{user_id=}")
             vcm: VerifyCodeModel = VerifyCodeModel.get_by_user_id(user_id)
+            if not vcm:
+                return {"message": "user not found"}, 400
             vcm.verify_code(code)
             return {"message": "successfully verify account"}, HTTPStatus.OK
 

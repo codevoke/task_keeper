@@ -17,7 +17,7 @@ class TaskResource(Resource):
         except ValueError:
             return {"message": "id must be an integer"}, HTTPStatus.BAD_REQUEST
 
-        task = TaskModel.find_by_id(id)
+        task = TaskModel.get_by_id(id)
         if task is None:
             return {"message": "user not found"}, HTTPStatus.NOT_FOUND
         else:

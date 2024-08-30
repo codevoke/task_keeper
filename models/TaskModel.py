@@ -44,6 +44,16 @@ class TaskModel(BaseModel):
             self.status = TaskStatus(status)
         except ValueError:
             raise ValueError('Invalid task status')
+        
+    @classmethod
+    def get_all_tasks(cls) -> list[TaskModel] | None:
+        tasks = cls.query.all()
+        if tasks:
+            for task in tasks:
+                task.set_status(TaskStatus.SEEN.value)
+            return tasks
+        else:
+            return None
 
     @classmethod
     def get_by_author(cls, author_id: int) -> list[TaskModel]:
